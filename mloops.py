@@ -6,6 +6,10 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 import traceback
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor
+
 
 class TRAINING:
     def __init__(self, data):
@@ -40,7 +44,7 @@ class TRAINING:
             lr.fit(self.x_train, self.y_train)
             self.y_pred = lr.predict(self.x_train)
             self.acc = r2_score(self.y_train, self.y_pred)
-            print(f"Training R2 Score: {self.acc:.2f}")
+            print(f"Training R2 Score with linear regression : {self.acc:.2f}")
         except Exception:
             print("An error occurred during training performance evaluation:")
             traceback.print_exc()  # Display the full error traceback
@@ -50,11 +54,71 @@ class TRAINING:
             lr.fit(self.x_test, self.y_test)
             self.y_pred_1 = lr.predict(self.x_test)
             self.acc_1 = r2_score(self.y_test, self.y_pred_1)
-            print(f"Training R2 Score: {self.acc_1:.2f}")
+            print(f"Testing R2 Score with  linear regression: {self.acc_1:.2f}")
         except Exception:
             print("An error occurred during training performance evaluation:")
             traceback.print_exc()  # Display the full error traceback        
+    def checking_testing_performance_with_knn(self):
+        try:
+            knn = KNeighborsRegressor()
+            knn.fit(self.x_test, self.y_test)
+            self.y_pred_1 = knn.predict(self.x_test)
+            self.acc_1 = r2_score(self.y_test, self.y_pred_1)
+            print(f"Tseting  R2 Score with knn: {self.acc_1:.2f}")
+        except Exception:
+            print("An error occurred during training performance evaluation:")
+            traceback.print_exc()  # Display the full error traceback    
+    def checking_training_performance_with_knn(self):
+        try:
+            knn = KNeighborsRegressor()
+            knn.fit(self.x_train, self.y_train)
+            self.y_pred_1 = knn.predict(self.x_train)
+            self.acc_1 = r2_score(self.y_train, self.y_pred_1)
+            print(f"Training R2 Score with knn: {self.acc_1:.2f}")
+        except Exception:
+            print("An error occurred during training performance evaluation:")
+            traceback.print_exc()  # Display the full error traceback     
                 
+    def checking_testing_performance_with_dt(self):
+        try:
+            dt = DecisionTreeRegressor()
+            dt.fit(self.x_test, self.y_test)
+            self.y_pred_1 = dt.predict(self.x_test)
+            self.acc_1 = r2_score(self.y_test, self.y_pred_1)
+            print(f"Testing R2 Score with dt: {self.acc_1:.2f}")
+        except Exception:
+            print("An error occurred during training performance evaluation:")
+            traceback.print_exc()  # Display the full error traceback 
+    def checking_training_performance_with_dt(self):
+        try:
+            dt = DecisionTreeRegressor()
+            dt.fit(self.x_train, self.y_train)
+            self.y_pred_1 = dt.predict(self.x_train)
+            self.acc_1 = r2_score(self.y_train, self.y_pred_1)
+            print(f"Traing R2 Score with dt: {self.acc_1:.2f}")
+        except Exception:
+            print("An error occurred during training performance evaluation:")
+            traceback.print_exc()  # Display the full error traceback              
+    def checking_training_performance_with_radom_farest(self):
+        try:
+            rn = RandomForestRegressor()
+            rn.fit(self.x_train, self.y_train)
+            self.y_pred_1 = rn.predict(self.x_train)
+            self.acc_1 = r2_score(self.y_train, self.y_pred_1)
+            print(f"Training R2 Score with random forest: {self.acc_1:.2f}")
+        except Exception:
+            print("An error occurred during training performance evaluation:")
+            traceback.print_exc()  # Display the full error traceback       
+    def checking_testing_performance_with_radom_farest(self):
+        try:
+            rn = RandomForestRegressor()
+            rn.fit(self.x_test, self.y_test)
+            self.y_pred_1 = rn.predict(self.x_test)
+            self.acc_1 = r2_score(self.y_test, self.y_pred_1)
+            print(f"Training R2 Score with random forest: {self.acc_1:.2f}")
+        except Exception:
+            print("An error occurred during training performance evaluation:")
+            traceback.print_exc()  # Display the full error traceback         
 
 if __name__ == "__main__":
     try:
@@ -64,6 +128,12 @@ if __name__ == "__main__":
         obj = TRAINING(data)  # Constructor will be called
         obj.checking_training_performance()
         obj.checking_testing_performance()
+        obj.checking_testing_performance_with_knn()
+        obj.checking_training_performance_with_knn()
+        obj.checking_testing_performance_with_dt()
+        obj.checking_training_performance_with_dt()
+        obj.checking_training_performance_with_radom_farest()
+        obj.checking_testing_performance_with_radom_farest()
     except Exception:
         print("An error occurred in the main block:")
         traceback.print_exc()  # Display the full error traceback
